@@ -1,9 +1,9 @@
 ---
 id: migrating-minemeld-guide
-title: Migrating Minemeld Nodes to Demisto Integrations
+title: Migrating Minemeld Nodes to Cortex XSOAR Integrations
 ---
 
-This guide will provide a reference on how to manually migrate the functionality of Minemeld nodes to the appropriate Demisto integrations. After reading it, you’ll be well equipped  to make the switch from Minemeld to Demisto.
+This guide will provide a reference on how to manually migrate the functionality of Minemeld nodes to the appropriate Cortex XSOAR integrations. After reading it, you’ll be well equipped  to make the switch from Minemeld to Cortex XSOAR.
 
 ## Supported Minemeld Node Prototypes
 
