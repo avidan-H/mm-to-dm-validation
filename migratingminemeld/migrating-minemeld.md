@@ -229,7 +229,7 @@ Let's look at a specific example to better understand how to migrate a given Min
     output: true
     prototype: bambenekconsulting.c2_dommasterlist_high
 ```
-There is a node named `C2_Bambenek_Consulting_dommasterlist_high` which uses the prototype `bambenekconsulting.c2_dommasterlist_high`. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `bambenekconsulting`, we know the prototype we are lookin for can be found in the [bambenekconsulting.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/bambenekconsulting.yml) YAML file. In this file, if we look under the `prototypes` key for `c2_dommasterlist_high`, we find the following,
+There is a node named `C2_Bambenek_Consulting_dommasterlist_high` which uses the prototype `bambenekconsulting.c2_dommasterlist_high`. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `bambenekconsulting`, we know the prototype we are looking for can be found in the [bambenekconsulting.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/bambenekconsulting.yml) YAML file. In this file, if we look under the `prototypes` key for `c2_dommasterlist_high`, we find the following,
 ```
     c2_dommasterlist_high:
         author: MineMeld Core Team
@@ -262,11 +262,11 @@ There is a node named `C2_Bambenek_Consulting_dommasterlist_high` which uses the
                 share_level: green
             source_name: bambenekconsulting.c2_dommasterlist_high
 ```
-The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's Bambenek Feed integration correctly are under the `config` key. Let's look at the Bambenek integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the picture below, if we do a search for 'bambenek', the _Bambenek Consulting Feed_ integration appears.
+The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's Bambenek Feed integration correctly are under the `config` key. Let's look at the Bambenek integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'bambenek', the _Bambenek Consulting Feed_ integration appears.
 
 <img width="758" src="./search-bambenek.png"></img>
 
-Wonderful! Let's configure an instance.
+Let's configure an instance.
 
 
 ## AWS Feed Example
@@ -278,7 +278,7 @@ Let's look at a specific example to better understand how to migrate a given Min
     output: true
     prototype: aws.CLOUDFRONT
 ```
-There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CLOUDFRONT`. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `aws`, we know the prototype we are lookin for can be found in the [aws.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/aws.yml) YAML file. In this file, if we look under the `prototypes` key for `CLOUDFRONT`, we find the following,
+There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CLOUDFRONT`. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `aws`, we know the prototype we are looking for can be found in the [aws.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/aws.yml) YAML file. In this file, if we look under the `prototypes` key for `CLOUDFRONT`, we find the following,
 ```
     CLOUDFRONT:
         author: MineMeld Core Team
@@ -309,19 +309,19 @@ There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CL
                 confidence: 100
                 share_level: green
 ```
-The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's AWS Feed integration correctly are under the `config` key. Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the picture below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
+The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's AWS Feed integration correctly are under the `config` key. Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
 
 <img width="758" src="./search-aws-feed.png"></img>
 
-Wonderful! Let's configure an instance.
+Let's configure an instance.
 
 <img src="./aws-feed-configuration-1.png"></img>
 
-As you can see in the image above, Cortex XSOAR provides default values for many of the configuration parameters as determined by the source of the feed. To configure the integration instance to fetch from the same source as the Minemeld node we are migrating from, we only need to update a single parameter. In this particular case, we only need to click the `Sub-Feeds` dropdown menu and click `CLOUDFRONT`. 
+As you can see in the screenshot above, Cortex XSOAR provides default values for many of the configuration parameters as determined by the source of the feed. To configure the integration instance to fetch from the same source as the Minemeld node we are migrating from, we only need to update a single parameter. In this particular case, we only need to click the `Sub-Feeds` dropdown menu and click `CLOUDFRONT`. 
 
 <img src="./aws-feed-configuration-2.png"></img>
 
-Notice that there is also a multi-select parameter, `Regions`, which we could use if we wanted to filter indicators returned by this `AWS Feed` integration instance by their associated region data field. Since, in our case, we are content to return indicators from all regions, we do not need to adjust this parameter. And walla, as easy as that, we've finished configuring an instance. Let's make sure that everything is working properly by clicking the `Test` button at the bottom of the configuration panel. If everything is working as expected, a green 'Success!' message should appear at the bottom of the configuration panel as shown in the picture below.
+Notice that there is also a multi-select parameter, `Regions`, which we could use if we wanted to filter indicators returned by this `AWS Feed` integration instance by their associated region data field. Since, in our case, we are content to return indicators from all regions, we do not need to adjust this parameter. And as easy as that, we've finished configuring an instance. Let's make sure that everything is working properly by clicking the `Test` button at the bottom of the configuration panel. If everything is working as expected, a green 'Success!' message should appear at the bottom of the configuration panel as shown in the screenshot below.
 
 <img src="./aws-feed-configuration-3.png"></img>
 
