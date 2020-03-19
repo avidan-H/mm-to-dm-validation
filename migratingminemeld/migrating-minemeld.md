@@ -530,3 +530,55 @@ The **Parameter Configuration** displays any configuration parameters that need 
 | spamhaus.EDROP | Spamhaus Feed | **Sub-Feeds**: https://www.spamhaus.org/drop/edrop.txt |
 | sslabusech.ipblacklist | abuse.ch SSL Blacklist Feed | **Sub-Feeds**: https://sslbl.abuse.ch/blacklist/sslipblacklist.csv |
 | tor.exit_addresses | Tor Exit Addresses Feed | |
+
+
+## Migrating Output Nodes
+
+Outputting indicators with Cortex XSOAR can be performed with two integrations, _Palo Alto Networks PAN-OS EDL Service_ and _Export Indicators Service_. Migrating Minemeld output nodes to Cortex XSOAR is a process that requires looking at the prototype of a given output node, as well as the prototypes of all of the nodes that flow into that output node. We need to do this to understand how to construct the query we will enter when configuring an instance of the _Palo Alto Networks PAN-OS EDL Service_ or _Export Indicators Service_ integration.
+
+Looking at a concrete example will better demonstrate how this is done. Here is an example output node in Minemeld.
+
+<img src="./feed-hc-green-output-node.png"></img>
+
+The first step is to look at the output node's prototype which we can do by clicking the link `stdlib.feedHCGreenWithValue` in the previous screenshot. It appears as follows.
+
+<img src="./feed-hc-green-output-prototype.png"></img>
+
+We see in the `config` section that this prototype filters for indicators whose `confidence` is greater than 75 and whose `share_level` is 'green' - this is the first bit of information we need.
+Now let's go back to the node's inputs. We need to explore each one. Our example only has one input node listed - let's explore it by clicking the link there `aggregatorIPv4Inbound-clone-MLB`.
+
+<img src="./ipv4-aggregator-node.png"></img>
+
+Let's see the details of the node's prototype by clicking the prototype linked there - `stdlib.aggregatorIPv4Inbound`.
+
+<img src="./ipv4-aggregator-prototype.png"></img>
+
+We see in the `config` section that this prototype filters for indicators whose `type` is 'IPv4' - let's file this information away for when we configure an integration instance in Cortex XSOAR.
+Now if we go back to the aggregator node, we see that it too only has one input node listed. Let's perform the same actions as before and we'll be finished gathering the information we need. Let's click on the input node linked as `exit_addresses-clone-MLB`.
+
+<img src="./exit_addresses-node.png"></img>
+
+Click on the prototype listed there, `tor.exit_addresses`, to see its details.
+
+We know from the table mapping Minemeld prototypes to Cortex XSOAR integrations detailed [above](#Minemeld-Prototype-to-Cortex-XSOAR-Integration-Mapping) that the `tor.exit_addresses` prototype maps to the _Tor Exit Addresses Feed_ integration. And with that, we have all the information we need to move forward. Let's review and gather here the information we collected from looking at the output node we want to migrate, and all the nodes that flow into it.
+1. filters for indicators whose `confidence` is greater than 75 and whose `share_level` is 'green'
+2. filters for indicators whose `type` is 'IPv4'
+3. the `tor.exit_addresses` prototype maps to the _Tor Exit Addresses Feed_ integration
+
+Let's configure an instance of the _Export Indicators Service_ integration using the information we collected to construct the query that defines which indicators are made available. Search for 'export indicators' in your Cortex XSOAR's integrations page as seen in the following screenshot.
+
+<img src="./search-export-indicators.png"></img>
+
+When configuring an instance of this integration, we need to provide an `Indicator Query`. The value entered here uses the same query syntax one would use in the Cortex XSOAR's indicators page to filter and search for specific indicators.
+
+<img src="./export-indicators-configuration-1.png"></img>
+
+So the information we gathered previously, translated to Cortex XSOAR's indicators query syntax would be,
+```
+type:IP and sourceBrands:"Tor Exit Addresses Feed" and confidence:>75 and trafficlightprotocol:Green
+```
+Enter that value for the **Indicator Query**.
+
+<img src="./export-indicators-configuration-2.png"></img>
+
+Finish configuring the integration to your desired specifications and press `Done`.
