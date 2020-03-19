@@ -367,9 +367,100 @@ Now, both `CLOUDFRONT` and `EC2` are selected for this instance. Click `Done` an
 In the case that we wanted to configure an instance of the `AWS Feed` integration to fetch from AWS's `EC2` feed _but_ we wanted it configured for different regions than the instance fetching from the `CLOUDFRONT` feed, then we would simply configure a new, separate instance of the `AWS Feed` as described in the [AWS Feed Example](#aws-feed-example) section.
 
 
+## Office 365 Feed Example
+
+Let's say we wanted to migrate this sample Office 365 node shown from a Minemeld configuration,
+```
+  allow-multi_o365-worldwide-any:
+    inputs: []
+    output: true
+    prototype: o365-api.worldwide-any
+```
+There is a node named `allow-multi_o365-worldwide-any` which uses the prototype `o365-api.worldwide-any`. The `o365-api` prototypes appear in the AutoFocus-hosted Minemeld UI as in the following screenshot.
+
+<img src="./mm-o365-prototypes.png"></img>
+
+If we click on the `o365-api.worldwide-any` prototype, we are presented with more details about it. The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's Office 365 Feed integration correctly are under the `config` key.
+
+<img src="./mm-o365-worldwide-any-prototype.png"></img>
+
+Alternatively, we can also find all of this information in the Minemeld GitHub repository. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `o365-api`, we know the prototype we are looking for can be found in the [o365-api.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/o365-api.yml) YAML file. In this file, if we look under the `prototypes` key for `worldwide-any`, we find the following,
+```
+    worldwide-any:
+        author: MineMeld Core Team
+        development_status: STABLE
+        node_type: miner
+        indicator_types:
+            - URL
+            - IPv6
+            - IPv4
+        tags:
+            - ShareLevelGreen
+            - ConfidenceHigh
+        description: >
+            Endpoints for O365, worldwide instance, any service
+        class: minemeld.ft.o365.O365API
+        config:
+            instance: Worldwide
+            service_areas: null
+            age_out:
+                default: null
+                sudden_death: true
+                interval: 1800
+            attributes:
+                confidence: 100
+                share_level: green
+```
+
+Let's look at the Office 365 Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'office 365 feed', the _Office 365 Feed_ integration appears.
+
+<img src="./search-office-feed.png"></img>
+
+Let's configure an instance.
+
+<img src="./office-feed-configuration-1.png"></img>
+
+As you can see in the screenshot above, Cortex XSOAR provides default values for many of the configuration parameters as determined by the source of the feed. To configure the integration instance to fetch from the same source as the Minemeld node we are migrating from, we do not need to make any adjustments because the default values for the **Regions** and **Services** configuration parameters are *Worldwide* and *All* respectively, which are the values we need to migrate this particular prototype. 
+
+Click `Done` at the bottom right of the configuration panel and you're all set!
+
+Let's explore two other cases.
+Let us say you wanted to migrate two other Office 365 prototypes instead of the one previously described. You want to migrate these two nodes from a Minemeld configuration for example,
+```yaml
+  allow_o365-china-exchange:
+    inputs: []
+    output: true
+    prototype: o365-api.china-exchange
+  allow_o365-germany-exchange:
+    inputs: []
+    output: true
+    prototype: o365-api.germany-exchange
+```
+
+We can configure one instance of the _Office 365 Feed_ integration with **Regions** set to *China* and *Germany* and **Services** set to *Exchange*, as shown in the following screenshot.
+
+<img src="./office-feed-configuration-2.png"></img>
+
+In the second case, let's say you wanted to migrate the two nodes from your Minemeld configuration that appear as follows,
+```yaml
+  allow_o365-china-exchange:
+    inputs: []
+    output: true
+    prototype: o365-api.china-exchange
+  allow_o365-germany-skype:
+    inputs: []
+    output: true
+    prototype: o365-api.germany-skype
+```
+
+Since these are non-overlapping, we should instead configure two instances of the _Office 365 Feed_ integration. One instance with **Regions** set to *China* and **Services** set to *Exchange* and the other instance with **Regions** set to *Germany* and **Services** set to *Skype* as shown in the screenshots below.
+
+<img src="./office-feed-configuration-3.png"></img><img src="./office-feed-configuration-4.png"></img>
+
+
 ## Indicator Tagging
 
-In the case that we wanted to add a tag to indicators fetched from an integration feed instance we could do using a Feed-Triggered job as described in the [Threat Intel Management Guide](https://docs.paloaltonetworks.com/content/dam/techdocs/en_US/pdf/cortex/demisto/demisto-threat-intelligence-management-guide/demisto-threat-intelligence-management-guide.pdf).
+In the case that we wanted to add a tag to indicators fetched from an integration feed instance we could do this using a Feed-Triggered job as described in the [Threat Intel Management Guide](https://docs.paloaltonetworks.com/content/dam/techdocs/en_US/pdf/cortex/demisto/demisto-threat-intelligence-management-guide/demisto-threat-intelligence-management-guide.pdf).
 
 
 ## Minemeld Prototype to Cortex XSOAR Integration Mapping
