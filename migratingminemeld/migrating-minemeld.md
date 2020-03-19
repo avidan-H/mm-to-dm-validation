@@ -295,14 +295,6 @@ Alternatively, we can also find all of this information in the Minemeld GitHub r
         node_type: miner
         indicator_types:
             - IPv4
-```
-    CLOUDFRONT:
-        author: MineMeld Core Team
-        development_status: STABLE
-        description: CLOUDFRONT ranges
-        node_type: miner
-        indicator_types:
-            - IPv4
         tags:
             - ConfidenceHigh
             - ShareLevelGreen
@@ -317,8 +309,7 @@ Alternatively, we can also find all of this information in the Minemeld GitHub r
                 - region
                 - service
             age_out:
-
-Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
+                default: null
                 sudden_death: true
                 interval: 257
             attributes:
@@ -374,6 +365,11 @@ In the dropdown menu for the `Sub-Feeds` multi-select field, click `EC2`.
 Now, both `CLOUDFRONT` and `EC2` are selected for this instance. Click `Done` and this `AWS Feed` integration instance will now fetch indicators from AWS's `CLOUDFRONT`  _and_ `EC2` feeds.
 
 In the case that we wanted to configure an instance of the `AWS Feed` integration to fetch from AWS's `EC2` feed _but_ we wanted it configured for different regions than the instance fetching from the `CLOUDFRONT` feed, then we would simply configure a new, separate instance of the `AWS Feed` as described in the [AWS Feed Example](#aws-feed-example) section.
+
+
+## Indicator Tagging
+
+In the case that we wanted to add a tag to indicators fetched from an integration feed instance we could do using a Feed-Triggered job as described in the [Threat Intel Management Guide](https://docs.paloaltonetworks.com/content/dam/techdocs/en_US/pdf/cortex/demisto/demisto-threat-intelligence-management-guide/demisto-threat-intelligence-management-guide.pdf).
 
 
 ## Minemeld Prototype to Cortex XSOAR Integration Mapping
