@@ -278,7 +278,23 @@ Let's look at a specific example to better understand how to migrate a given Min
     output: true
     prototype: aws.CLOUDFRONT
 ```
-There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CLOUDFRONT`. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `aws`, we know the prototype we are looking for can be found in the [aws.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/aws.yml) YAML file. In this file, if we look under the `prototypes` key for `CLOUDFRONT`, we find the following,
+There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CLOUDFRONT`. The `aws` prototypes appear in the AutoFocus-hosted Minemeld UI as in the following screenshot.
+
+<img src="./mm-aws-prototypes.png"></img>
+
+If we click on the `aws.CLOUDFRONT` prototype, we are presented with more details about it. The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's AWS Feed integration correctly are under the `config` key.
+
+<img src="./mm-aws-cloudfront-prototype.png"></img>
+
+Alternatively, we can also find all of this information in the Minemeld GitHub repository. All of the prototypes that come out of the box can be found in the Minemeld repository on GitHub [here](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/tree/master/prototypes). Listed there are all the files in which all of Minemeld's prototypes can be found. Since the prototype in our example begins with the prefix `aws`, we know the prototype we are looking for can be found in the [aws.yml](https://github.com/PaloAltoNetworks/minemeld-node-prototypes/blob/master/prototypes/aws.yml) YAML file. In this file, if we look under the `prototypes` key for `CLOUDFRONT`, we find the following,
+```
+    CLOUDFRONT:
+        author: MineMeld Core Team
+        development_status: STABLE
+        description: CLOUDFRONT ranges
+        node_type: miner
+        indicator_types:
+            - IPv4
 ```
     CLOUDFRONT:
         author: MineMeld Core Team
@@ -301,7 +317,8 @@ There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CL
                 - region
                 - service
             age_out:
-                default: null
+
+Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
                 sudden_death: true
                 interval: 257
             attributes:
@@ -309,7 +326,8 @@ There is a node named `allow-ip_aws_cloudfront` which uses the prototype `aws.CL
                 confidence: 100
                 share_level: green
 ```
-The attributes that we need to look at currently for configuring an instance of Cortex XSOAR's AWS Feed integration correctly are under the `config` key. Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
+
+Let's look at the AWS Feed integration and see how to take these attributes from the Minemeld prototype and translate them to Cortex XSOAR. As shown in the screenshot below, if we do a search for 'aws feed', the _AWS Feed_ integration appears.
 
 <img width="758" src="./search-aws-feed.png"></img>
 
