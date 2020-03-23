@@ -275,10 +275,6 @@ Since these are non-overlapping, we should instead configure two instances of th
 <img src="./office-feed-configuration-3.png"></img><img src="./office-feed-configuration-4.png"></img>
 
 
-## Indicator Tagging
-
-In the case that we wanted to add a tag to indicators fetched from an integration feed instance we could do this using a Feed-Triggered job as described in the [Threat Intel Management Guide](https://docs.paloaltonetworks.com/content/dam/techdocs/en_US/pdf/cortex/demisto/demisto-threat-intelligence-management-guide/demisto-threat-intelligence-management-guide.pdf).
-
 ## Migrating Output Nodes
 
 Outputting indicators with Cortex XSOAR can be performed with two integrations, _Palo Alto Networks PAN-OS EDL Service_ and _Export Indicators Service_. Migrating Minemeld output nodes to Cortex XSOAR is a process that requires looking at the prototype of a given output node, as well as the prototypes of all of the nodes that flow into that output node. We need to do this to understand how to construct the query we will enter when configuring an instance of the _Palo Alto Networks PAN-OS EDL Service_ or _Export Indicators Service_ integration.
