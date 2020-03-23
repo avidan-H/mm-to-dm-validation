@@ -5,6 +5,17 @@ title: Migrating Minemeld Nodes to Cortex XSOAR Integrations
 
 This guide will provide a reference on how to manually migrate the functionality of Minemeld nodes to the appropriate Cortex XSOAR integrations. After reading it, you’ll be well equipped  to make the switch from Minemeld to Cortex XSOAR.
 
+## Conceptual Introduction
+
+In Minemeld, the product revolves around the concept of nodes. Nodes have three different types, "miner"s, "processor"s, and "outbound" nodes and together, these three node types represent the entire functionality of Minemeld. Simply put, Minemeld can be broken down into a data flow composed of three steps, data ingestion, data processing, and data export with these three steps corresponding to the node types "miner", "processor", and "outbound" respectively. The flow of data described in a little more detail is as follows:
+| Step | Node Type |
+| ---- | ---------:|
+| 1. Data Ingestion: ingest data from a variety of sources or _feeds_ | **miner** |
+| 2. Data Processing: process the data in some fashion, for example - aggregate data from different sources, filter data by type, tag the data, etc. | **processor** |
+| 3. Data Export: make processed data available for external consumption | **outbound** |
+
+Whereas in Minemeld the flow of data is divided into the three previously described node types, in Cortex XSOAR, data flow is split into two - Feed Integrations, and Outbound Integrations. Cortex XSOAR provides dedicated Feed Integrations for many feed sources out of the box as well as generic Feed Integrations that can be configured to work with many feed sources for which explicit Feed Integrations have not been created. Unlike how in Minemeld the outputs of a **miner** node (the indicators fetched from a feed source) would need to be specified as the input of other node(s), all indicators fetched from Feed Integrations in Cortex XSOAR flow into the Cortex XSOAR instance's indicator store. Because the Cortex XSOAR indicator store already supports the mechanism of searching and filtering indicators, we are able to condense what in Minemeld was the flow of indicators into a **processor** node and then an **output** node into configuring a single instance of our *Export Indicators Service* integration. When configuring an instance of the *Export Indicators Service* integration, we can enter an indicator query (using the query syntax one would use to search and filter indicators in the Indicators page of your Cortex XSOAR instance) that determines exactly which indicators will be made available by this integration instance for external consumption.
+
 ## AWS Feed Example
 
 Let's look at a specific example to better understand how to migrate a given Minemeld node. If we wanted to migrate the AWS feed shown in the Minemeld configuration file as follows,
