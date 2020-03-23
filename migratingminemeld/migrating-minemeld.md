@@ -16,6 +16,76 @@ In Minemeld, the product revolves around the concept of nodes. Nodes have three 
 
 Whereas in Minemeld the flow of data is divided into the three previously described node types, in Cortex XSOAR, data flow is split into two - Feed Integrations, and Outbound Integrations. Cortex XSOAR provides dedicated Feed Integrations for many feed sources out of the box as well as generic Feed Integrations that can be configured to work with many feed sources for which explicit Feed Integrations have not been created. Unlike how in Minemeld the outputs of a **miner** node (the indicators fetched from a feed source) would need to be specified as the input of other node(s), all indicators fetched from Feed Integrations in Cortex XSOAR flow into the Cortex XSOAR instance's indicator store. Because the Cortex XSOAR indicator store already supports the mechanism of searching and filtering indicators, we are able to condense what in Minemeld was the flow of indicators into a **processor** node and then an **output** node into configuring a single instance of our *Export Indicators Service* integration. When configuring an instance of the *Export Indicators Service* integration, we can enter an indicator query (using the query syntax one would use to search and filter indicators in the Indicators page of your Cortex XSOAR instance) that determines exactly which indicators will be made available by this integration instance for external consumption.
 
+
+## Minemeld Prototype to Cortex XSOAR Integration Mapping
+
+The **Parameter Configuration** displays any configuration parameters that need to be specified for the corresponding integration in order for the integration instance to fetch indicators from the same source as the related prototype. The required configuration parameters will be presented as a list of keys and values where the key is the name of the configuration parameter and the value is what the user needs to enter or select. If no parameters are listed, this means that the user does not need to specify any parameter values for that integration instance.
+
+| Prototype | Integration | Parameter Configuration |
+| --------- | ----------- | ----------------------- |
+| alienvault.reputation | Alienvault Reputation Feed | |
+| aws.AMAZON | AWS Feed | **Sub-Feeds**: AMAZON |
+| aws.CLOUDFRONT | AWS Feed | **Sub-Feeds**: CLOUDFRONT |
+| aws.EC2 | AWS Feed | **Sub-Feeds**: EC2 |
+| aws.ROUTE53 | AWS Feed | **Sub-Feeds**: ROUTE53 |
+| aws.ROUTE53_HEALTHCHECKS | AWS Feed | **Sub-Feeds**: ROUTE53_HEALTHCHECKS |
+| aws.S3 | AWS Feed | **Sub-Feeds**: S3 |
+| azure.cloudIPs | Azure Feed | |
+| bambenekconsulting.c2_dommasterlist | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-dommasterlist.txt |
+| bambenekconsulting.c2_dommasterlist_high | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-dommasterlist-high.txt |
+| bambenekconsulting.c2_ipmasterlist | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-ipmasterlist.txt |
+| bambenekconsulting.c2_ipmasterlist_high | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-ipmasterlist-high.txt |
+| blocklist_de.all | Blocklist_de Feed | **Sub-Feeds**: all |
+| blocklist_de.apache | Blocklist_de Feed | **Sub-Feeds**: apache |
+| blocklist_de.bots | Blocklist_de Feed | **Sub-Feeds**: bots |
+| blocklist_de.bruteforcelogin | Blocklist_de Feed | **Sub-Feeds**: bruteforcelogin |
+| blocklist_de.ftp | Blocklist_de Feed | **Sub-Feeds**: ftp |
+| blocklist_de.imap | Blocklist_de Feed | **Sub-Feeds**: imap |
+| blocklist_de.mail | Blocklist_de Feed | **Sub-Feeds**: mail |
+| blocklist_de.sip | Blocklist_de Feed | **Sub-Feeds**: sip |
+| blocklist_de.ssh | Blocklist_de Feed | **Sub-Feeds**: ssh |
+| blocklist_de.strongips | Blocklist_de Feed | **Sub-Feeds**: strongips |
+| bruteforceblocker.blist | BruteForceBlocker Feed | |
+| cloudflare.ipv4 | Cloudflare Feed | **Sub-Feeds**: https://www.cloudflare.com/ips-v4 |
+| cloudflare.ipv6 | Cloudflare Feed | **Sub-Feeds**: https://www.cloudflare.com/ips-v6 |
+| dshield.block | DShield Feed | |
+| fastly.ipv4 | Fastly Feed | |
+| feodotracker.badips | Feodo Tracker IP Blocklist Feed | **Feed Source**: Last 30 Days |
+| feodotracker.ipblocklist | Feodo Tracker IP Blocklist Feed | **Feed Source**: Currently Active |
+| feodotracker.hashes | Feodo Tracker Hashes Feed | |
+| malwaredomainlist.ip | Malware Domain List Active IPs Feed | |
+| o365-api.china-any | Office 365 Feed | **Regions**: China<br>**Services**: Any |
+| o365-api.china-exchange | Office 365 Feed | **Regions**: China<br>**Services**: Exchange |
+| o365-api.china-sharepoint | Office 365 Feed | **Regions**: China<br>**Services**: Sharepoint |
+| o365-api.china-skype | Office 365 Feed | **Regions**: China<br>**Services**: Skype |
+| o365-api.germany-any | Office 365 Feed | **Regions**: Germany<br>**Services**: Any |
+| o365-api.germany-common | Office 365 Feed | **Regions**: Germany<br>**Services**: Common |
+| o365-api.germany-exchange | Office 365 Feed | **Regions**: Germany<br>**Services**: Exchange |
+| o365-api.germany-sharepoint | Office 365 Feed | **Regions**: Germany<br>**Services**: Sharepoint |
+| o365-api.germany-skype | Office 365 Feed | **Regions**: Germany<br>**Services**: Skype |
+| o365-api.usgovdod-any | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Any |
+| o365-api.usgovdod-exchange | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Exchange |
+| o365-api.usgovdod-sharepoint | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Sharepoint |
+| o365-api.usgovdod-skype | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Skype |
+| o365-api.usgovgcchigh-any | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Any |
+| o365-api.usgovgcchigh-exchange | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Exchange |
+| o365-api.usgovgcchigh-sharepoint | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Sharepoint |
+| o365-api.usgovgcchigh-skype | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Skype |
+| o365-api.worldwide-any | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Any |
+| o365-api.worldwide-common | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Common |
+| o365-api.worldwide-exchange | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Exchange |
+| o365-api.worldwide-sharepoint | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Sharepoint |
+| o365-api.worldwide-skype | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Skype |
+| phishme.Intelligence | Cofense Feed | **Username**: \<your-cofense-username\><br>**Password**: \<your-cofense-password\> |
+| proofpoint.EmergingThreatsDomains | Proofpoint Feed | **Authorization Code**: \<key-from-proofpoint-used-to-access-the-api\><br>**Indicator Reputation**: \<what-reputation-to-assign-indicators-fetched-from-this-feed\><br>**Indicator Type**: domain |
+| proofpoint.EmergingThreatsIPs | Proofpoint Feed | **Authorization Code**: \<key-from-proofpoint-used-to-access-the-api\><br>**Indicator Reputation**: \<what-reputation-to-assign-indicators-fetched-from-this-feed\><br>**Indicator Type**: ip |
+| recordedfuture.MasterRiskList | Recorded Future RiskList Feed | **Indicator Type**: \<the-type-of-indicator-to-fetch-from-this-feed\><br>**API token**: \<your-recorded-future-api-token\> |
+| spamhaus.DROP | Spamhaus Feed | **Sub-Feeds**: https://www.spamhaus.org/drop/drop.txt |
+| spamhaus.EDROP | Spamhaus Feed | **Sub-Feeds**: https://www.spamhaus.org/drop/edrop.txt |
+| sslabusech.ipblacklist | abuse.ch SSL Blacklist Feed | **Sub-Feeds**: https://sslbl.abuse.ch/blacklist/sslipblacklist.csv |
+| tor.exit_addresses | Tor Exit Addresses Feed | |
+
+
 ## AWS Feed Example
 
 Let's look at a specific example to better understand how to migrate a given Minemeld node. If we wanted to migrate the AWS feed shown in the Minemeld configuration file as follows,
@@ -208,76 +278,6 @@ Since these are non-overlapping, we should instead configure two instances of th
 ## Indicator Tagging
 
 In the case that we wanted to add a tag to indicators fetched from an integration feed instance we could do this using a Feed-Triggered job as described in the [Threat Intel Management Guide](https://docs.paloaltonetworks.com/content/dam/techdocs/en_US/pdf/cortex/demisto/demisto-threat-intelligence-management-guide/demisto-threat-intelligence-management-guide.pdf).
-
-
-## Minemeld Prototype to Cortex XSOAR Integration Mapping
-
-The **Parameter Configuration** displays any configuration parameters that need to be specified for the corresponding integration in order for the integration instance to fetch indicators from the same source as the related prototype. The required configuration parameters will be presented as a list of keys and values where the key is the name of the configuration parameter and the value is what the user needs to enter or select. If no parameters are listed, this means that the user does not need to specify any parameter values for that integration instance.
-
-| Prototype | Integration | Parameter Configuration |
-| --------- | ----------- | ----------------------- |
-| alienvault.reputation | Alienvault Reputation Feed | |
-| aws.AMAZON | AWS Feed | **Sub-Feeds**: AMAZON |
-| aws.CLOUDFRONT | AWS Feed | **Sub-Feeds**: CLOUDFRONT |
-| aws.EC2 | AWS Feed | **Sub-Feeds**: EC2 |
-| aws.ROUTE53 | AWS Feed | **Sub-Feeds**: ROUTE53 |
-| aws.ROUTE53_HEALTHCHECKS | AWS Feed | **Sub-Feeds**: ROUTE53_HEALTHCHECKS |
-| aws.S3 | AWS Feed | **Sub-Feeds**: S3 |
-| azure.cloudIPs | Azure Feed | |
-| bambenekconsulting.c2_dommasterlist | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-dommasterlist.txt |
-| bambenekconsulting.c2_dommasterlist_high | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-dommasterlist-high.txt |
-| bambenekconsulting.c2_ipmasterlist | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-ipmasterlist.txt |
-| bambenekconsulting.c2_ipmasterlist_high | Bambenek Consulting Feed | **Sub-Feeds**: http://osint.bambenekconsulting.com/feeds/c2-ipmasterlist-high.txt |
-| blocklist_de.all | Blocklist_de Feed | **Sub-Feeds**: all |
-| blocklist_de.apache | Blocklist_de Feed | **Sub-Feeds**: apache |
-| blocklist_de.bots | Blocklist_de Feed | **Sub-Feeds**: bots |
-| blocklist_de.bruteforcelogin | Blocklist_de Feed | **Sub-Feeds**: bruteforcelogin |
-| blocklist_de.ftp | Blocklist_de Feed | **Sub-Feeds**: ftp |
-| blocklist_de.imap | Blocklist_de Feed | **Sub-Feeds**: imap |
-| blocklist_de.mail | Blocklist_de Feed | **Sub-Feeds**: mail |
-| blocklist_de.sip | Blocklist_de Feed | **Sub-Feeds**: sip |
-| blocklist_de.ssh | Blocklist_de Feed | **Sub-Feeds**: ssh |
-| blocklist_de.strongips | Blocklist_de Feed | **Sub-Feeds**: strongips |
-| bruteforceblocker.blist | BruteForceBlocker Feed | |
-| cloudflare.ipv4 | Cloudflare Feed | **Sub-Feeds**: https://www.cloudflare.com/ips-v4 |
-| cloudflare.ipv6 | Cloudflare Feed | **Sub-Feeds**: https://www.cloudflare.com/ips-v6 |
-| dshield.block | DShield Feed | |
-| fastly.ipv4 | Fastly Feed | |
-| feodotracker.badips | Feodo Tracker IP Blocklist Feed | **Feed Source**: Last 30 Days |
-| feodotracker.ipblocklist | Feodo Tracker IP Blocklist Feed | **Feed Source**: Currently Active |
-| feodotracker.hashes | Feodo Tracker Hashes Feed | |
-| malwaredomainlist.ip | Malware Domain List Active IPs Feed | |
-| o365-api.china-any | Office 365 Feed | **Regions**: China<br>**Services**: Any |
-| o365-api.china-exchange | Office 365 Feed | **Regions**: China<br>**Services**: Exchange |
-| o365-api.china-sharepoint | Office 365 Feed | **Regions**: China<br>**Services**: Sharepoint |
-| o365-api.china-skype | Office 365 Feed | **Regions**: China<br>**Services**: Skype |
-| o365-api.germany-any | Office 365 Feed | **Regions**: Germany<br>**Services**: Any |
-| o365-api.germany-common | Office 365 Feed | **Regions**: Germany<br>**Services**: Common |
-| o365-api.germany-exchange | Office 365 Feed | **Regions**: Germany<br>**Services**: Exchange |
-| o365-api.germany-sharepoint | Office 365 Feed | **Regions**: Germany<br>**Services**: Sharepoint |
-| o365-api.germany-skype | Office 365 Feed | **Regions**: Germany<br>**Services**: Skype |
-| o365-api.usgovdod-any | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Any |
-| o365-api.usgovdod-exchange | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Exchange |
-| o365-api.usgovdod-sharepoint | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Sharepoint |
-| o365-api.usgovdod-skype | Office 365 Feed | **Regions**: USGovDoD<br>**Services**: Skype |
-| o365-api.usgovgcchigh-any | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Any |
-| o365-api.usgovgcchigh-exchange | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Exchange |
-| o365-api.usgovgcchigh-sharepoint | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Sharepoint |
-| o365-api.usgovgcchigh-skype | Office 365 Feed | **Regions**: USGovGCCHigh<br>**Services**: Skype |
-| o365-api.worldwide-any | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Any |
-| o365-api.worldwide-common | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Common |
-| o365-api.worldwide-exchange | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Exchange |
-| o365-api.worldwide-sharepoint | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Sharepoint |
-| o365-api.worldwide-skype | Office 365 Feed | **Regions**: Worldwide<br>**Services**: Skype |
-| phishme.Intelligence | Cofense Feed | **Username**: \<your-cofense-username\><br>**Password**: \<your-cofense-password\> |
-| proofpoint.EmergingThreatsDomains | Proofpoint Feed | **Authorization Code**: \<key-from-proofpoint-used-to-access-the-api\><br>**Indicator Reputation**: \<what-reputation-to-assign-indicators-fetched-from-this-feed\><br>**Indicator Type**: domain |
-| proofpoint.EmergingThreatsIPs | Proofpoint Feed | **Authorization Code**: \<key-from-proofpoint-used-to-access-the-api\><br>**Indicator Reputation**: \<what-reputation-to-assign-indicators-fetched-from-this-feed\><br>**Indicator Type**: ip |
-| recordedfuture.MasterRiskList | Recorded Future RiskList Feed | **Indicator Type**: \<the-type-of-indicator-to-fetch-from-this-feed\><br>**API token**: \<your-recorded-future-api-token\> |
-| spamhaus.DROP | Spamhaus Feed | **Sub-Feeds**: https://www.spamhaus.org/drop/drop.txt |
-| spamhaus.EDROP | Spamhaus Feed | **Sub-Feeds**: https://www.spamhaus.org/drop/edrop.txt |
-| sslabusech.ipblacklist | abuse.ch SSL Blacklist Feed | **Sub-Feeds**: https://sslbl.abuse.ch/blacklist/sslipblacklist.csv |
-| tor.exit_addresses | Tor Exit Addresses Feed | |
-
 
 ## Migrating Output Nodes
 
